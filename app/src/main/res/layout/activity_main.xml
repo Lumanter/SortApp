@@ -14,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="7dp"
-        android:text="Esperando lista..."
+        android:text="@string/esperando_lista"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/input"
@@ -31,14 +31,16 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="17dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="numero,numero,numero...."
+        android:hint="@string/numero_numero_numero"
         android:inputType="textPersonName"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/display"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:targetApi="o" />
 
     <Button
         android:id="@+id/bubble"
@@ -48,7 +50,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="42dp"
         android:layout_marginBottom="319dp"
-        android:text="Bubble Sort"
+        android:text="@string/bubble_sort"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/shell"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +65,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="68dp"
         android:layout_marginBottom="319dp"
-        android:text="Shell Sort"
+        android:text="@string/shell_sort"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,4 +73,20 @@
         app:layout_constraintTop_toBottomOf="@+id/input"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shell" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 </android.support.constraint.ConstraintLayout>

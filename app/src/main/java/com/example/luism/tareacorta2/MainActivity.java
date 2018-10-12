@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Arrays;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.PointsGraphSeries;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     EditText input;
     Button shell,bubble;
     int[] arrayList;
+    GraphView graph;
 
     private void setDisplay(){
         int n = arrayList.length;
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         input = (EditText)findViewById(R.id.input);
         shell = (Button)findViewById(R.id.shell);
         bubble = (Button)findViewById(R.id.bubble);
+        graph = (GraphView) findViewById(R.id.graph);
+        graph.setTitle("Eje x: Tamaño de array | Eje y: Duracion (ms)");
 
         input.setOnKeyListener(new View.OnKeyListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -69,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
         shell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+                graph.removeAllSeries();
                 int n = arrayList.length;
+                long startTime = System.nanoTime();
                 for (int i = 0; i < n - 1; i++){
                     int index = i;
                     for (int j = i + 1; j < n; j++)
@@ -79,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
                     arrayList[index] = arrayList[i];
                     arrayList[i] = smallerNumber;
                 }
-
+                long endTime = System.nanoTime();
+                long duration = (endTime - startTime);
+                createGraph(arrayList.length, duration);
                 setDisplay();
             }
         });
@@ -87,28 +97,41 @@ public class MainActivity extends AppCompatActivity {
         bubble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-
+                graph.removeAllSeries();
                 int n = arrayList.length;
                 int temp = 0;
+                long startTime = System.nanoTime();
                 for(int i=0; i < n; i++){
-                    for(int j=1; j < (n-i); j++){
-                        if(arrayList[j-1] > arrayList[j]){
+                    for(int j=1; j < (n-i); j++) {
+                        if (arrayList[j - 1] > arrayList[j]) {
                             //swap elements
-                            temp = arrayList[j-1];
-                            arrayList[j-1] = arrayList[j];
+                            temp = arrayList[j - 1];
+                            arrayList[j - 1] = arrayList[j];
                             arrayList[j] = temp;
                         }
                     }
                 }
-
+                long endTime = System.nanoTime();
+                long duration = (endTime - startTime);
+                createGraph(arrayList.length, duration);
                 setDisplay();
             }
         });
+    }
 
+    protected void createGraph(int arraySize, long duration){
+        int intDuration = (int) duration/1000;
+        graph.getViewport().setXAxisBoundsManual(true);
+        int min = arraySize < 5 ? 0 : arraySize - 5;
+        graph.getViewport().setMinX(min);
+        graph.getViewport().setMaxX(arraySize + 5);
 
-
-
-
-
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(intDuration - 10);
+        graph.getViewport().setMaxY(intDuration + 10);
+        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>();
+        series.appendData(new DataPoint(arraySize,intDuration), true, 500);
+        graph.addSeries(series);
+        series.setShape(PointsGraphSeries.Shape.POINT);
     }
 }

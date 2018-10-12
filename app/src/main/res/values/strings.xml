@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TareaCorta2</string>
+    <string name="bubble_sort">Bubble Sort</string>
+    <string name="shell_sort">Shell Sort</string>
+    <string name="esperando_lista">Esperando lista...</string>
+    <string name="numero_numero_numero">numero,numero,numero....</string>
 </resources>
